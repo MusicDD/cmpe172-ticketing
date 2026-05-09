@@ -2,26 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Appointment System</title>
+  <title>Ticket System</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
+      background-color: #dce8f5;
+      min-height: 100vh;
+    }
+
+    nav {
+      background-color: #4a90c4;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    nav .logo {
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      margin-right: auto;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+      padding: 6px 14px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    nav a:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+
+    .hero {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f2f5;
+      height: calc(100vh - 52px);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      color: #1a3a52;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: #4a6a82;
+      margin-bottom: 32px;
+    }
+
+    .hero a.btn {
+      background-color: #4a90c4;
+      color: white;
+      padding: 12px 28px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+
+    .hero a.btn:hover {
+      background-color: #357aad;
     }
   </style>
 </head>
 <body>
 
-  <h1>Welcome to the Ticket System</h1>
-  <p>Submit a ticket here.</p>
+  <nav>
+    <div class="logo">🎫 TicketSystem</div>
+    <a href="/">Home</a>
+    <a href="/appointments">View Tickets</a>
+    <a href="/add-ticket">Add a Ticket</a>
+    <a href="/login">Login</a>
+  </nav>
 
-  <a class="btn" href="/appointment.json">View Appointments</a>
+  <div class="hero">
+    <h1>Welcome to the Ticket System</h1>
+    <p>Submit and manage your support tickets easily.</p>
+    <a class="btn" href="/appointments">View Tickets</a>
+  </div>
 
 </body>
 </html>

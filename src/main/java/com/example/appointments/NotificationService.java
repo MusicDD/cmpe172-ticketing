@@ -4,14 +4,17 @@ import com.example.appointments.ticket.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.ResourceAccessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class NotificationService {
 
+    private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String NOTIFY_URL = "http://localhost:8080/notify";
+    private final String NOTIFY_URL = "http://localhost:8081/notify";
     private final int MAX_RETRIES = 3;
 
     public String sendNotification(Ticket ticket) {
@@ -31,17 +34,15 @@ public class NotificationService {
                     String.class
                 );
 
-                System.out.println("INFO - Notification sent successfully for Ticket #" + ticket.getId());
+                logger.info("Notification sent successfully for Ticket #{}", ticket.getId());
                 return response;
 
             } catch (ResourceAccessException e) {
                 attempt++;
-                System.out.println("WARN - Notification service unreachable. Attempt " 
-                + attempt + " of " + MAX_RETRIES);
+                logger.warn("Notification service unreachable. Attempt {} of {}", attempt, MAX_RETRIES);
 
                 if (attempt == MAX_RETRIES) {
-                    System.out.println("ERROR - Notification failed after " + MAX_RETRIES + 
-                    " attempts for Ticket #" + ticket.getId());
+                    logger.error("Notification failed after {} attempts for Ticket #{}", MAX_RETRIES, ticket.getId());
                     return "Notification failed — ticket was saved but notification could not be sent";
                 }
             }

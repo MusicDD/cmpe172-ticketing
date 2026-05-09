@@ -15,7 +15,6 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-
     @Autowired
     private TicketService ticketService;
 
@@ -25,12 +24,13 @@ public class HomeController {
     }
 
     @GetMapping("/appointments")
-    @ResponseBody
-    public List<Ticket> appointments() {
-        return ticketService.getAllTickets();
+    public String appointments(Model model) {
+        List<Ticket> tickets = ticketService.getAllTickets();
+        model.addAttribute("tickets", tickets);
+        return "appointments";
     }
 
-    @PostMapping("/submit")
+    @GetMapping("/submit")
     @ResponseBody
     public String submitTicket(
         @RequestParam String userName,
@@ -43,5 +43,32 @@ public class HomeController {
             "2026-03-27", "09:00", "pending", priority
         );
         return ticketService.submitTicket(ticket);
+    }
+
+    @GetMapping("/add-ticket")
+    public String addTicket() {
+        return "add-ticket";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/admin-tickets")
+    public String adminTickets(Model model) {
+        List<Ticket> tickets = ticketService.getAllTickets();
+        model.addAttribute("tickets", tickets);
+        return "admin-tickets";
+    }
+
+    @GetMapping("/update-ticket")
+    @ResponseBody
+    public String updateTicket(
+        @RequestParam int id,
+        @RequestParam String status,
+        @RequestParam(required = false, defaultValue = "") String notes
+    ) {
+        return ticketService.updateTicketStatus(id, status, notes);
     }
 }
